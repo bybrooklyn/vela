@@ -1,0 +1,26 @@
+# Keep bundled/third-party sources from distorting GitHub's project language
+# breakdown. The application and tests remain detectable as Swift.
+Sources/CSQLite/** linguist-vendored
+Vendor/** linguist-vendored
+Upstream/** linguist-vendored
+
+# Generated or binary presentation assets are not source-language signals.
+MacClient/Resources/**/*.png linguist-generated
+MacClient/Resources/**/*.svg linguist-generated
+
+# Documentation should not be counted as implementation code.
+docs/** linguist-documentation
+*.md linguist-documentation
+
+# Make the smaller source families explicit for Linguist.
+*.swift linguist-language=Swift
+*.c linguist-language=C
+*.h linguist-language=C
+*.sh linguist-language=Shell
+*.py linguist-language=Python
+*.yml linguist-language=YAML
+*.yaml linguist-language=YAML
+*.json linguist-language=JSON
+*.plist linguist-language=XML
+*.xcprivacy linguist-language=XML
+justfile linguist-language=Makefile

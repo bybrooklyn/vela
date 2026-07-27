@@ -1,7 +1,6 @@
 # SwiftPM
 .build/
 .swiftpm/
-Package.resolved
 *.build/
 
 # Xcode
@@ -35,8 +34,14 @@ build/
 .claude/settings.local.json
 .codex/
 .agents/
+.idea/
+.vscode/
+.fleet/
 *.local
 *.local.*
+*.swp
+*.swo
+*~
 
 # Vendored source and generated native artifacts
 Upstream/Signal-iOS/*
@@ -55,3 +60,7 @@ Vendor/Artifacts/
 *.log
 *.trace
 *.dmg
+
+# Test and coverage output
+coverage/
+.coverage/

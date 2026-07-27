@@ -1,0 +1,21 @@
+# Release Checklist
+
+- [ ] Exact Signal-iOS, libsignal, RingRTC, SQLCipher, GRDB, and protobuf pins recorded.
+- [ ] Upstream iOS targets build.
+- [ ] `./Scripts/verify.sh` passes.
+- [ ] macOS unit/UI tests pass on clean hardware.
+- [ ] Migration tests pass from every prior public schema.
+- [ ] Official-client interoperability matrix passes.
+- [ ] Development plaintext crypto is absent from Release composition.
+- [ ] SQLCipher runtime verification passes.
+- [ ] Entitlements reviewed and minimized.
+- [ ] No secrets in repository or artifacts.
+- [ ] Diagnostics manually inspected for sensitive data.
+- [ ] App archive signed with Developer ID and Hardened Runtime.
+- [ ] Nested frameworks/helpers verified.
+- [ ] Notarization accepted and stapled.
+- [ ] Gatekeeper check passes on a clean Mac.
+- [ ] Update artifact signed with separately held update key.
+- [ ] Matching AGPL source tag/archive published.
+- [ ] SBOM and checksums published.
+- [ ] Staged beta/canary rollout completed.

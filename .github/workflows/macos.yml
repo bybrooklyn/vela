@@ -1,0 +1,47 @@
+name: Native macOS app
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # The documented primary build path. It must not depend on full Xcode.
+  xcode-free:
+    name: Xcode-free build
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain versions
+        run: swift --version
+      - name: Full verification
+        run: ./Scripts/verify.sh
+      - name: Release app bundle
+        run: CONFIGURATION=release ./Scripts/macOS/build.sh
+      - name: Upload app bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vela-app-release
+          path: build/Vela.app
+          if-no-files-found: error
+
+  # The optional contributor path. A failure here must not mask the path above.
+  xcode:
+    name: Optional Xcode project
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain versions
+        run: |
+          xcodebuild -version
+          swift --version
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate project
+        run: ./Scripts/macOS/generate-project.sh
+      - name: Build and test native app
+        run: ./Scripts/macOS/test.sh

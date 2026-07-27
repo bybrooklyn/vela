@@ -1,0 +1,24 @@
+name: Core verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # SQLCipher and the product package target macOS 26. Keep CI on the same
+    # platform rather than advertising an unsupported Linux verification lane.
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify debug tree
+        run: ./Scripts/verify.sh
+      - name: Verify release tree
+        run: ./Scripts/verify-release.sh
+      - name: Verify sanitizers
+        run: ./Scripts/verify-sanitizers.sh

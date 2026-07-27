@@ -1,0 +1,58 @@
+version: 1
+entries:
+  - subsystem: provisioning
+    status: bridge-required
+    upstream_area: Signal/Provisioning and SignalServiceKit linked-device services
+    replacement: SignalUpstreamBridge.begin/events/cancel
+    tests_required:
+      - real QR scan
+      - cancellation
+      - expiration
+      - restart after completion
+
+  - subsystem: cryptography
+    status: bridge-required
+    upstream_area: LibSignalClient plus SignalServiceKit identity/session stores
+    replacement: LibSignalClientAdapter
+    tests_required:
+      - upstream vectors
+      - official client interoperability
+      - multi-device fan-out
+
+  - subsystem: service_transport
+    status: bridge-required
+    upstream_area: SignalServiceKit authenticated REST/WebSocket services
+    replacement: ServiceTransport
+    tests_required:
+      - reconnect
+      - sleep/wake
+      - auth rejection
+      - durable acknowledgement boundary
+
+  - subsystem: database
+    status: portable-development-implementation
+    upstream_area: GRDB and SQLCipher database storage
+    replacement: ClientStore adapter over upstream production schema
+    tests_required:
+      - every released migration fixture
+      - interrupted migration
+      - corruption recovery
+
+  - subsystem: notifications
+    status: macos-implemented
+    upstream_area: iOS APNs and notification extensions
+    replacement: persistent linked-device receive connection plus UserNotifications
+    tests_required:
+      - denied permission
+      - locked screen privacy
+      - action routing
+
+  - subsystem: calls
+    status: deferred
+    upstream_area: RingRTC iOS bridge
+    replacement: native macOS CallEngine adapter
+    tests_required:
+      - audio device changes
+      - video
+      - group calls
+      - screen sharing

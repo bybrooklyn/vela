@@ -1,0 +1,57 @@
+# SwiftPM
+.build/
+.swiftpm/
+Package.resolved
+*.build/
+
+# Xcode
+DerivedData/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcuserstate
+MacClient/VelaMac.xcodeproj/
+build/
+*.xcarchive/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Secrets and signing
+*.p12
+*.pem
+*.cer
+*.key
+*.p8
+*.mobileprovision
+*.provisionprofile
+.env
+.env.*
+!.env.example
+
+# Local editor/agent state
+.claude/settings.local.json
+.codex/
+.agents/
+*.local
+*.local.*
+
+# Vendored source and generated native artifacts
+Upstream/Signal-iOS/*
+!Upstream/Signal-iOS/README.md
+Vendor/Artifacts/
+*.tar.gz
+*.zip
+
+# Diagnostics and local databases
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.trace
+*.dmg

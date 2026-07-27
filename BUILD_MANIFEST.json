@@ -1,0 +1,61 @@
+{
+  "product": "Vela",
+  "version": "0.1.2-development",
+  "snapshot_date": "2026-07-26",
+  "license": "AGPL-3.0-only",
+  "minimum_macos": "26.0",
+  "swift_tools_version": "6.1",
+  "development_mode": {
+    "provisioning": "local simulator",
+    "transport": "in-process loopback",
+    "wire_protection": "explicit plaintext test codec",
+    "database": "SQLite"
+  },
+  "production_mode": {
+    "status": "fail-closed for the native libsignal bridge; live messaging runs through the embedded signal-cli backend",
+    "backend": "signal-cli 0.14.6, compiled ahead of time with GraalVM native-image and embedded in Vela.app",
+    "database_policy": "SQLCipher required for the native bridge; the signal-cli backend currently uses an unencrypted local database",
+    "cryptography_policy": "end-to-end encryption is performed by libsignal inside signal-cli; Vela applies none of its own"
+  },
+  "upstream": {
+    "signal_ios_commit": "30da85beab750c23d691e8a91e2e6a96b0842080",
+    "libsignal": "v0.97.3 (Signal-iOS compatibility baseline; not vendored)",
+    "ringrtc": "v2.70.0",
+    "sqlcipher": "v4.6.1-f_barrierfsync",
+    "swift_protobuf": "1.36.1"
+  },
+  "source_included": {
+    "vela": true,
+    "signal_ios": false,
+    "reason": "Use Scripts/bootstrap-direct-fork.sh to install this overlay into the pinned direct fork while preserving upstream history."
+  },
+  "verification": {
+    "core_debug_tests": {
+      "count": 147,
+      "failures": 0,
+      "status": "pass"
+    },
+    "core_release_tests": {
+      "count": 147,
+      "failures": 0,
+      "status": "pass"
+    },
+    "address_sanitizer": {
+      "count": null,
+      "failures": null,
+      "status": "not rerun for 0.1.2",
+      "leak_sweep": "disabled by default only on Linux Swift runtime/test harness"
+    },
+    "thread_sanitizer": {
+      "count": null,
+      "failures": null,
+      "status": "not rerun for 0.1.2"
+    },
+    "clean_archive_retest": "pass: 204-file source manifest verified; extracted debug and release suites each passed 147 tests in 25 suites with 0 failures",
+    "native_macos_build": "pass on macOS arm64 with Swift 6.3.3 and macOS SDK"
+  },
+  "fixes": {
+    "swift_toolchain": "Repository verification prefers Swiftly's selected toolchain, supports VELA_SWIFT_BIN, isolates scripted SwiftPM output in .build/vela-selected, and cleans it after compiler or package-graph changes.",
+    "sqlite_linking": "SQLCipher is compiled from the vendored C amalgamation with CommonCrypto rather than discovered through Homebrew pkg-config."
+  }
+}

@@ -1,0 +1,7 @@
+--swiftversion 6.0
+--indent 4
+--linebreaks lf
+--semicolons never
+--commas always
+--stripunusedargs closure-only
+--disable wrapMultilineStatementBraces

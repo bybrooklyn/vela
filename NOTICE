@@ -1,0 +1,14 @@
+Vela
+Copyright (C) 2026 Vela contributors
+Licensed under GNU AGPL-3.0-only.
+
+Vela is an unofficial project and is not affiliated with or endorsed by Signal
+Technology Foundation or Signal Messenger, LLC.
+
+When installed into or distributed with Signal-iOS, retain all Signal-iOS,
+libsignal, RingRTC, SQLCipher, GRDB, protobuf, and other third-party notices and
+licenses from the exact upstream revision used by the build.
+
+“Signal” and the Signal logos are trademarks of their respective owners. This
+project must use independent branding, icons, bundle identifiers, domains, and
+release channels.

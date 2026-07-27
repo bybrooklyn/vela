@@ -1,0 +1,29 @@
+name: Source release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  source:
+    # Source archives must verify on Vela's supported platform: macOS 26.
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source tree
+        run: |
+          ./Scripts/verify.sh
+          ./Scripts/verify-release.sh
+      - name: Build and verify source archive
+        run: |
+          ./Scripts/source-archive.sh "${GITHUB_REF_NAME#v}"
+          ./Scripts/verify-archive.sh "build/vela-${GITHUB_REF_NAME#v}-source.zip"
+      - name: Publish source and checksum
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/*.zip
+            build/*.sha256

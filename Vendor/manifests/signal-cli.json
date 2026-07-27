@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/AsamK/signal-cli",
+  "release_tag": "v0.14.6",
+  "version": "0.14.6",
+  "archive": "signal-cli-0.14.6.tar.gz",
+  "archive_sha256": "e90f4faea709b3c0a55909646a2b94289b9779ba9c8fd5c6eaa847d3f67312eb",
+  "recorded_date": "2026-07-25",
+  "libsignal_client": "0.96.3",
+  "runtime": {
+    "strategy": "graalvm-native-image",
+    "note": "signal-cli is compiled ahead of time into a single native executable, so the app ships no Java runtime and no jars. This also removes the JIT and unsigned-executable-memory entitlements a JVM requires."
+  },
+  "graalvm": {
+    "url": "https://download.oracle.com/graalvm/25/latest/graalvm-jdk-25_macos-aarch64_bin.tar.gz",
+    "note": "Oracle GraalVM for JDK 25. Only a build-time dependency; nothing from it ships in the app beyond compiled code."
+  },
+  "signed_native_libraries": [
+    "libsignal_jni.dylib",
+    "libsqlitejdbc.dylib"
+  ],
+  "source_included_in_this_archive": false,
+  "note": "Run Scripts/macOS/vendor-signal-cli.sh to populate Vendor/Artifacts. signal-cli is GPL-3.0; redistributing a combined Vela.app requires offering corresponding source for both projects."
+}

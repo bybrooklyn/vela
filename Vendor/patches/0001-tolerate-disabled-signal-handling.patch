@@ -1,0 +1,36 @@
+Subject: Tolerate disabled signal handling in the daemon
+
+Vela runs signal-cli as a GraalVM native image inside a macOS App Sandbox.
+GraalVM implements `sun.misc.Signal` on top of a named POSIX semaphore, and the
+sandbox refuses `sem_open` for names that are not prefixed with an application
+group identifier. The image therefore aborts at startup with:
+
+    Fatal error: CSunMiscSignal.open() failed.
+
+unless it is launched with `-XX:-EnableSignalHandling`. With that flag set,
+`Shutdown.installHandler` instead throws:
+
+    java.lang.IllegalArgumentException: Signal handlers can't be installed if
+    signal handling is disabled, see option 'EnableSignalHandling'.
+
+The handlers only exist so an interactive Ctrl-C shuts the daemon down cleanly.
+Vela owns the process lifecycle and stops the daemon by terminating it, so their
+absence changes nothing for this embedding. The JVM shutdown hook is still
+installed, so the ordinary termination path is unaffected.
+
+--- a/src/main/java/org/asamk/signal/Shutdown.java
++++ b/src/main/java/org/asamk/signal/Shutdown.java
+@@
+         initialized = true;
+-        Signal.handle(new Signal("INT"), Shutdown::handleSignal);
+-        Signal.handle(new Signal("TERM"), Shutdown::handleSignal);
++        // Signal handling is unavailable when running as a sandboxed GraalVM
++        // native image. The shutdown hook below still runs, so termination is
++        // handled; only the interactive Ctrl-C path is lost.
++        try {
++            Signal.handle(new Signal("INT"), Shutdown::handleSignal);
++            Signal.handle(new Signal("TERM"), Shutdown::handleSignal);
++        } catch (IllegalArgumentException | UnsupportedOperationException e) {
++            logger.debug("Signal handlers unavailable; relying on the shutdown hook.", e);
++        }
+         Runtime.getRuntime().addShutdownHook(Thread.ofPlatform().unstarted(() -> {

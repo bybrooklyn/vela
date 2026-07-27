@@ -1,0 +1,20 @@
+{
+  "repository": "https://github.com/signalapp/Signal-iOS.git",
+  "resolved_commit": "30da85beab750c23d691e8a91e2e6a96b0842080",
+  "default_branch": "main",
+  "recorded_date": "2026-07-24",
+  "libsignal": {
+    "tag": "v0.97.3",
+    "prebuild_checksum": "763cac99fb7b82ac98abedb5c5b33ea1d2794d87763e0c3ca80b326b7ebbf404"
+  },
+  "ringrtc": {
+    "tag": "v2.70.0",
+    "prebuild_checksum": "1b87cf9bd2ddba747fbab0ec871c434c448d219f537dbf4a81a56f111e91b146"
+  },
+  "sqlcipher": {
+    "tag": "v4.6.1-f_barrierfsync"
+  },
+  "swift_protobuf": "1.36.1",
+  "source_included_in_this_archive": false,
+  "note": "Run Scripts/vendor-signal-ios.sh to populate Upstream/Signal-iOS at this exact revision. The direct-fork bootstrap script installs this code over a real Signal-iOS fork while preserving upstream history."
+}
